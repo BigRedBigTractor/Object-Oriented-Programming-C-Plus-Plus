@@ -13,7 +13,7 @@ RPG::RPG(){
     skills[1] = "parry"; 
 }
 
-RPG::RPG(string name, int health, int strength,int defense, string type){
+RPG::RPG(string name, int health, int strength, int defense, string type) {
     this->name = name; 
     this->health = health; 
     this->strength = strength; 
@@ -21,7 +21,25 @@ RPG::RPG(string name, int health, int strength,int defense, string type){
     this->type = type; 
 
     setSkills();
-} 
+}
+
+// Accessor method definitions
+string RPG::getName() const {
+    return name;
+}
+
+int RPG::getHealth() const {
+    return health;
+}
+
+int RPG::getStrength() const {
+    return strength;
+}
+
+int RPG::getDefense() const {
+    return defense;
+}
+
 /**
  * @brief sets the skills based ont he RPG's Rle
  * 
