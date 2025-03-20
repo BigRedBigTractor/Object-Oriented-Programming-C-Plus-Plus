@@ -3,26 +3,51 @@
 
 using namespace std; 
 
+// Function to display the current stats of both characters 
+void displayStats(RPG* p1, RPG* p2){
+    cout << p1->getName() << " health: " << p1->getHealth() << " "; 
+    cout << p2->getName() << " health: " << p2->getHealth() << endl; 
+}
+
+//function to run the game loop until one player is defeated 
+void gameLoop(RPG* p1, RPG* p2){
+    //Continue while both players are alive
+    while (p1->isAlive() && p2->isAlive()){
+        // Display stats
+        displayStats(p1, p2); 
+
+        //Player 1's turn 
+        cout << p1->getName() << "'s turn" << endl; 
+        p1->useSkill(p2);  
+        cout <<"-----------------------------\n"; 
+
+        // check if player 2 is still alive before their turn
+        if (!p2->isAlive()) break; 
+
+        displayStats(p1, p2); 
+
+        //Player 2's turn 
+        cout << p2->getName() << "'s turn" << endl; 
+        p2->useSkill(p1); 
+        cout <<"-----------------------------\n"; 
+    }
+}
+//function to determine and display the winner
+void displayEnd(RPG p1, RPG p2){
+    if(p1.isAlive()){
+        cout << p1.getName() << " defeated " << p2.getName() << "! Good game!\n"; 
+    } else if (p2.isAlive()){
+        cout << p2.getName() << " defeated " << p1.getName() << "! Good game!\n"; 
+    } else {
+        cout << "It's a draw! Both players have fallen.\n"; 
+    }
+}
 int main(){
-    // Create an RPG object using the default construcutor 
-    RPG character1; 
-    
-    // Create an RPG object using the overload constructor 
-    RPG character2("Hero", 150, 20, 15, "mage"); 
+    RPG p1 = RPG("Wiz", 70, 45, 15, "mage"); 
+    RPG p2 = RPG(); 
 
-    // Test accessor Functions 
-    cout << "Is " << "Character 1: " << character1.getName() << "| Health: " << character1.getHealth()<< endl; 
-    cout << "Is " << "Character 2: " << character2.getName() << "| Health: " << character2.getHealth()<< endl; 
-
-    // Check if characters are alive 
-    cout << "Is " << character1.getName() << " alive? " << (character1.isAlive() ? "Yes" : "No") << endl; 
-    cout << "Is " << character2.getName() << " alive? " << (character2.isAlive() ? "Yes" : "No") << endl; 
-
-    // Test updateHealth()
-    cout << "Updating " << character1.getName() << "'s health to 0..." << endl; 
-    character1.updateHealth(0); 
-
-    cout << "Is " << character1.getName() << " alive now?" << (character1.isAlive() ? "Yes" : "NO") << endl; 
+    gameLoop(&p1, &p2); 
+    displayEnd(p1, p2); 
 
     return 0;
 }
